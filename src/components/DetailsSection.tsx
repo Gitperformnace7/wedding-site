@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function DetailsSection() {
+  const { t } = useLanguage()
+  
   // Таймер обратного отсчета
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -45,7 +48,15 @@ export default function DetailsSection() {
     const startDay = firstDay === 0 ? 6 : firstDay - 1 // Преобразуем в понедельник = 0
     
     const calendar = []
-    const daysOfWeek = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
+    const daysOfWeek = [
+      t('calendar.mon'), 
+      t('calendar.tue'), 
+      t('calendar.wed'), 
+      t('calendar.thu'), 
+      t('calendar.fri'), 
+      t('calendar.sat'), 
+      t('calendar.sun')
+    ]
     
     // Добавляем заголовки дней недели
     calendar.push(
@@ -134,10 +145,10 @@ export default function DetailsSection() {
           className="text-center mb-12"
         >
                      <h2 className="font-script text-5xl md:text-5xl text-wedding-black mb-8 elegant-title-shadow">
-             Дорогие гости!
+             {t('details.title')}
            </h2>
                      <p className="font-russian text-base md:text-lg text-wedding-gray-dark leading-relaxed max-w-lg mx-auto">
-             Приглашаем вас разделить с нами радость особенного для нас события и стать частью нашей семейной истории.
+             {t('details.subtitle')}
            </p>
         </motion.div>
 
@@ -161,7 +172,7 @@ export default function DetailsSection() {
           {/* Название месяца */}
           <div className="text-center mb-8">
                          <h3 className="font-script text-3xl md:text-4xl text-wedding-black mb-2 month-title-shadow">
-               Сентябрь
+               {t('details.month')}
              </h3>
           </div>
 
@@ -173,7 +184,7 @@ export default function DetailsSection() {
           {/* Год */}
           <div className="text-center mt-8">
             <span className="font-elegant text-2xl font-light text-wedding-gray-dark">
-              2025
+              {t('details.year')}
             </span>
           </div>
         </motion.div>
@@ -197,10 +208,10 @@ export default function DetailsSection() {
                                       {/* Дата и время */}
              <div className="mb-8">
                <p className="font-serif text-2xl font-light text-wedding-black mb-3 tracking-wide">
-                 12 сентября 2025
+                 {t('details.date')}
                </p>
                <p className="font-serif text-3xl font-normal text-wedding-black tracking-widest">
-                 18:00
+                 {t('details.time')}
                </p>
              </div>
              
@@ -213,7 +224,7 @@ export default function DetailsSection() {
                className="mb-8"
              >
                <p className="font-russian text-sm text-wedding-gray-dark mb-4 uppercase tracking-wide">
-                 До свадьбы осталось:
+                 {t('details.countdown')}
                </p>
                <div className="grid grid-cols-4 gap-4">
                  <div className="text-center">
@@ -223,7 +234,7 @@ export default function DetailsSection() {
                      </span>
                    </div>
                    <span className="font-russian text-xs text-wedding-gray-dark uppercase">
-                     дней
+                     {t('details.days')}
                    </span>
                  </div>
                  <div className="text-center">
@@ -233,7 +244,7 @@ export default function DetailsSection() {
                      </span>
                    </div>
                    <span className="font-russian text-xs text-wedding-gray-dark uppercase">
-                     часов
+                     {t('details.hours')}
                    </span>
                  </div>
                  <div className="text-center">
@@ -243,7 +254,7 @@ export default function DetailsSection() {
                      </span>
                    </div>
                    <span className="font-russian text-xs text-wedding-gray-dark uppercase">
-                     минут
+                     {t('details.minutes')}
                    </span>
                  </div>
                  <div className="text-center">
@@ -253,7 +264,7 @@ export default function DetailsSection() {
                      </span>
                    </div>
                    <span className="font-russian text-xs text-wedding-gray-dark uppercase">
-                     секунд
+                     {t('details.seconds')}
                    </span>
                  </div>
                </div>
@@ -269,7 +280,7 @@ export default function DetailsSection() {
             {/* Место */}
             <div className="mb-8">
               <p className="font-russian text-lg text-wedding-black italic">
-                Ресторан Portafino
+                {t('details.venue')}
               </p>
             </div>
             

@@ -3,10 +3,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Navigation, Phone, Heart } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function MapSection() {
+  const { t } = useLanguage()
+  
   const handleDirections = () => {
-    // Ссылка на 2ГИС для ресторана Portafino
+    // Ссылка на 2ГИС для ресторана Portofino
     // Заменить на реальный адрес когда будет известен
     const address = 'Ресторан Portofino'
     const url = 'https://2gis.kz/astana/geo/70000001022291208'
@@ -24,7 +27,7 @@ export default function MapSection() {
           className="text-center mb-16"
         >
           <h2 className="font-serif text-3xl md:text-4xl text-wedding-black mb-4">
-            Как добраться
+            {t('map.title')}
           </h2>
           <div className="flex items-center justify-center mb-6">
             <div className="h-px bg-wedding-gold w-16"></div>
@@ -32,7 +35,7 @@ export default function MapSection() {
             <div className="h-px bg-wedding-gold w-16"></div>
           </div>
           <p className="font-elegant text-lg text-wedding-gray-dark max-w-2xl mx-auto">
-            Мы выбрали для вас прекрасное место для нашего торжества
+            {t('map.subtitle')}
           </p>
         </motion.div>
 
@@ -50,7 +53,7 @@ export default function MapSection() {
                 <MapPin className="w-6 h-6 text-wedding-gold" />
               </div>
               <h3 className="font-serif text-xl text-wedding-black">
-                Ресторан Portafino
+                {t('map.venue-name')}
               </h3>
             </div>
             
@@ -59,10 +62,10 @@ export default function MapSection() {
                 <MapPin className="w-5 h-5 text-wedding-gold mr-3 mt-0.5" />
                 <div>
                   <p className="font-modern text-wedding-gray-dark">
-                    г. Астана, Ресторан Portofino
+                    {t('map.address')}
                   </p>
                   <p className="font-modern text-sm text-wedding-gray-dark opacity-75">
-                    Точный адрес можно посмотреть в 2ГИС по кнопке ниже
+                    {t('map.address-note')}
                   </p>
                 </div>
               </div>
@@ -75,7 +78,7 @@ export default function MapSection() {
               className="mt-8 w-full bg-wedding-gold hover:bg-wedding-gold/90 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-300 flex items-center justify-center"
             >
               <Navigation className="w-5 h-5 mr-2" />
-              Открыть в 2ГИС
+              {t('map.directions')}
             </button>
           </motion.div>
 

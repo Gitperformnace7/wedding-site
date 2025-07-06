@@ -87,7 +87,7 @@ export default function MusicPlayer() {
     if (showHint) {
       const timer = setTimeout(() => {
         setShowHint(false)
-      }, 10000)
+      }, 5000)
       return () => clearTimeout(timer)
     }
   }, [showHint])

@@ -66,7 +66,7 @@ export default function HeroSection() {
             className="pb-16 md:pb-16" // Отступ снизу
           >
             <div className="text-center">
-              <h3 className="font-script text-5xl md:text-7xl text-white text-shadow drop-shadow-xl mb-3 font-normal leading-none elegant-script">
+              <h3 className="font-script text-6xl md:text-7xl text-white text-shadow drop-shadow-xl mb-3 font-normal leading-none elegant-script">
                 Рустем
               </h3>
               <div className="flex items-center justify-center my-6">
@@ -74,7 +74,7 @@ export default function HeroSection() {
                 <span className="font-serif text-3xl md:text-4xl text-white mx-6 opacity-80 font-light">&</span>
                 <div className="h-px bg-white/40 w-10 md:w-16"></div>
               </div>
-              <h3 className="font-script text-5xl md:text-7xl text-white text-shadow drop-shadow-xl font-normal leading-none elegant-script">
+              <h3 className="font-script text-6xl md:text-7xl text-white text-shadow drop-shadow-xl font-normal leading-none elegant-script">
                 Фариза
               </h3>
             </div>

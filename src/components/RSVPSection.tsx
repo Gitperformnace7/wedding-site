@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { Heart, Send, CheckCircle, Calendar, Download, HeartHandshake } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface RSVPFormData {
   name: string
@@ -12,6 +13,7 @@ interface RSVPFormData {
 }
 
 export default function RSVPSection() {
+  const { t } = useLanguage()
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [userAttendance, setUserAttendance] = useState<'yes' | 'no' | null>(null)
@@ -39,7 +41,7 @@ export default function RSVPSection() {
       }
     } catch (error) {
       console.error('Error submitting RSVP:', error)
-      alert('Произошла ошибка при отправке ответа. Пожалуйста, попробуйте еще раз.')
+      alert(t('rsvp.error'))
     } finally {
       setIsSubmitting(false)
     }
@@ -48,11 +50,11 @@ export default function RSVPSection() {
   // Функция для создания ICS файла (iPhone/iOS)
   const createICSFile = () => {
     const event = {
-      title: 'Свадьба Рустема и Фаризы',
+      title: t('hero.groom') + ' & ' + t('hero.bride') + ' Wedding',
       start: '20250912T150000Z', // 18:00 по Астане = 15:00 UTC
       end: '20250913T000000Z',   // До полуночи
-      location: 'Ресторан Portafino, Астана',
-      description: 'Свадебное торжество Рустема и Фаризы'
+      location: t('details.venue') + ', Астана',
+      description: t('hero.groom') + ' & ' + t('hero.bride') + ' Wedding'
     }
 
     const icsContent = `BEGIN:VCALENDAR
@@ -82,10 +84,10 @@ END:VCALENDAR`
   // Функция для создания Google Calendar URL (Android)
   const createGoogleCalendarURL = () => {
     const event = {
-      text: 'Свадьба Рустема и Фаризы',
+      text: t('hero.groom') + ' & ' + t('hero.bride') + ' Wedding',
       dates: '20250912T150000Z/20250913T000000Z',
-      location: 'Ресторан Portafino, Астана',
-      details: 'Свадебное торжество Рустема и Фаризы'
+      location: t('details.venue') + ', Астана',
+      details: t('hero.groom') + ' & ' + t('hero.bride') + ' Wedding'
     }
 
     const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(event.text)}&dates=${event.dates}&location=${encodeURIComponent(event.location)}&details=${encodeURIComponent(event.details)}`
@@ -132,12 +134,12 @@ END:VCALENDAR`
               <HeartHandshake className="w-16 h-16 text-wedding-gold mx-auto mb-6" />
             )}
             <h2 className="font-script text-3xl text-wedding-black mb-4 elegant-title-shadow">
-              {userAttendance === 'yes' ? 'Спасибо!' : 'Понимаем вас!'}
+              {userAttendance === 'yes' ? t('rsvp.success-yes') : t('rsvp.success-no')}
             </h2>
             <p className="font-russian text-lg text-wedding-gray-dark mb-8">
               {userAttendance === 'yes' 
-                ? 'Ваш ответ получен. Мы с нетерпением ждем встречи с вами!'
-                : 'Ваш ответ получен. Очень жаль, что вы не сможете присутствовать на нашем торжестве.'
+                ? t('rsvp.success-message-yes')
+                : t('rsvp.success-message-no')
               }
             </p>
             
@@ -150,20 +152,20 @@ END:VCALENDAR`
               >
                 <Calendar className="w-8 h-8 text-wedding-gold mx-auto mb-4" />
                 <h3 className="font-script text-xl text-wedding-black mb-2 elegant-title-shadow">
-                  Добавить в календарь
+                  {t('rsvp.add-to-calendar')}
                 </h3>
                 <p className="font-russian text-sm text-wedding-gray-dark mb-4">
-                  Не забудьте сохранить дату нашей свадьбы!
+                  {t('rsvp.calendar-subtitle')}
                 </p>
                 <button
                   onClick={addToCalendar}
                   className="bg-wedding-gold hover:bg-wedding-gold/90 text-white font-medium py-2 px-6 rounded-lg transition-colors duration-300 flex items-center justify-center mx-auto"
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  Добавить в календарь
+                  {t('rsvp.calendar-button')}
                 </button>
                 <p className="font-russian text-xs text-wedding-gray-dark mt-3">
-                  12 сентября 2025, 18:00 • Ресторан Portafino
+                  {t('rsvp.calendar-info')}
                 </p>
               </motion.div>
             )}
@@ -184,7 +186,7 @@ END:VCALENDAR`
           className="text-center mb-16"
         >
           <h2 className="font-script text-4xl md:text-4xl text-wedding-black mb-4 elegant-title-shadow">
-            Подтверждение присутствия
+            {t('rsvp.title')}
           </h2>
           <div className="flex items-center justify-center mb-6">
             <div className="h-px bg-wedding-gold w-16"></div>
@@ -192,7 +194,7 @@ END:VCALENDAR`
             <div className="h-px bg-wedding-gold w-16"></div>
           </div>
           <p className="font-russian text-lg text-wedding-gray-dark">
-            Пожалуйста, подтвердите ваше присутствие
+            {t('rsvp.subtitle')}
           </p>
         </motion.div>
 
@@ -207,13 +209,13 @@ END:VCALENDAR`
           {/* Имя */}
           <div>
             <label className="block font-russian text-wedding-black mb-2">
-              Ваше имя *
+              {t('rsvp.name-label')}
             </label>
             <input
               type="text"
-              {...register('name', { required: 'Пожалуйста, укажите ваше имя' })}
+              {...register('name', { required: t('rsvp.name-required') })}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wedding-gold focus:border-transparent outline-none transition-colors"
-              placeholder="Введите ваше имя"
+              placeholder={t('rsvp.name-placeholder')}
             />
             {errors.name && (
               <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
@@ -223,29 +225,29 @@ END:VCALENDAR`
           {/* Подтверждение присутствия */}
           <div>
             <label className="block font-modern text-wedding-black mb-4">
-              Сможете ли вы присутствовать на торжестве? *
+              {t('rsvp.attendance-label')}
             </label>
             <div className="space-y-3">
               <label className="flex items-center">
                 <input
                   type="radio"
                   value="yes"
-                  {...register('attendance', { required: 'Пожалуйста, выберите один из вариантов' })}
+                  {...register('attendance', { required: t('rsvp.attendance-required') })}
                   className="w-4 h-4 text-wedding-gold focus:ring-wedding-gold border-gray-300"
                 />
                 <span className="ml-3 font-modern text-wedding-black">
-                  Да, с удовольствием приду! 🎉
+                  {t('rsvp.attendance-yes')}
                 </span>
               </label>
               <label className="flex items-center">
                 <input
                   type="radio"
                   value="no"
-                  {...register('attendance', { required: 'Пожалуйста, выберите один из вариантов' })}
+                  {...register('attendance', { required: t('rsvp.attendance-required') })}
                   className="w-4 h-4 text-wedding-gold focus:ring-wedding-gold border-gray-300"
                 />
                 <span className="ml-3 font-modern text-wedding-black">
-                  К сожалению, не смогу присутствовать 😢
+                  {t('rsvp.attendance-no')}
                 </span>
               </label>
             </div>
@@ -257,13 +259,13 @@ END:VCALENDAR`
           {/* Пожелания */}
           <div>
             <label className="block font-russian text-wedding-black mb-2">
-              Пожелания или комментарии
+              {t('rsvp.message-label')}
             </label>
             <textarea
               {...register('message')}
               rows={4}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-wedding-gold focus:border-transparent outline-none transition-colors resize-none"
-              placeholder="Ваши пожелания молодоженам (необязательно)"
+              placeholder={t('rsvp.message-placeholder')}
             />
           </div>
 
@@ -276,12 +278,12 @@ END:VCALENDAR`
             {isSubmitting ? (
               <>
                 <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                Отправляется...
+                {t('rsvp.submitting')}
               </>
             ) : (
               <>
                 <Send className="w-5 h-5 mr-2" />
-                Отправить ответ
+                {t('rsvp.submit')}
               </>
             )}
           </button>

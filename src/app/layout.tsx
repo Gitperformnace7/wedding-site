@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import React from 'react'
 import './globals.css'
+import { LanguageProvider } from '@/contexts/LanguageContext'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 export const metadata: Metadata = {
   title: 'Рустем & Фариза | Свадебное приглашение',
@@ -40,9 +42,12 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Allura&family=Alex+Brush&display=swap" rel="stylesheet" />
       </head>
       <body className="font-modern text-wedding-black bg-wedding-white">
+        <LanguageProvider>
         <div className="relative min-h-screen">
+            <LanguageSwitcher />
           {children}
         </div>
+        </LanguageProvider>
       </body>
     </html>
   )

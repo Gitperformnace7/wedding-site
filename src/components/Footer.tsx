@@ -3,8 +3,11 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Heart, Calendar } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function Footer() {
+  const { t } = useLanguage()
+  
   return (
     <footer className="bg-wedding-black text-wedding-white py-12 px-6">
       <div className="max-w-4xl mx-auto">
@@ -20,18 +23,18 @@ export default function Footer() {
           </div>
           
           <h3 className="font-script text-4xl mb-4 text-shadow">
-            Рустем & Фариза
+            {t('hero.groom')} & {t('hero.bride')}
           </h3>
           
           <div className="flex items-center justify-center mb-6">
             <Calendar className="w-5 h-5 text-wedding-gold mr-2" />
             <span className="font-modern text-wedding-gold">
-              12 сентября 2025 • 18:00
+              {t('footer.date-time')}
             </span>
           </div>
           
           <p className="font-russian text-lg mb-6 text-wedding-white/80">
-            Спасибо, что станете частью нашего особенного дня!
+            {t('footer.thanks')}
           </p>
           
           <div className="flex items-center justify-center mb-8">
@@ -42,10 +45,10 @@ export default function Footer() {
           
           <div className="text-sm text-wedding-white/60">
             <p className="mb-2 font-russian">
-              С любовью создано для наших дорогих друзей и семьи
+              {t('footer.created')}
             </p>
             <p>
-              © 2025 <span className="font-script">Рустем & Фариза</span>
+              {t('footer.copyright')} <span className="font-script">{t('hero.groom')} & {t('hero.bride')}</span>
             </p>
           </div>
         </motion.div>
