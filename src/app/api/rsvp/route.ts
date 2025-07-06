@@ -1,5 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '@vercel/kv'
+import { createClient } from 'redis'
+
+// Создание Redis клиента
+const getRedisClient = async () => {
+  const client = createClient({
+    url: process.env.REDIS_URL
+  })
+  
+  if (!client.isOpen) {
+    await client.connect()
+  }
+  
+  return client
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,11 +42,17 @@ export async function POST(request: NextRequest) {
       created_at: new Date().toISOString()
     }
 
-    // Сохранение в Vercel KV
-    await kv.hset(`rsvp:${response.id}`, response)
+    // Подключение к Redis
+    const redis = await getRedisClient()
+    
+    // Сохранение в Redis
+    await redis.hSet(`rsvp:${response.id}`, response)
     
     // Добавление ID в список для получения всех ответов
-    await kv.sadd('rsvp:ids', response.id)
+    await redis.sAdd('rsvp:ids', response.id)
+    
+    // Закрытие соединения
+    await redis.disconnect()
 
     return NextResponse.json({
       success: true,
@@ -62,13 +81,16 @@ export async function GET(request: NextRequest) {
       )
     }
 
+    // Подключение к Redis
+    const redis = await getRedisClient()
+
     // Получение всех ID ответов
-    const responseIds = await kv.smembers('rsvp:ids')
+    const responseIds = await redis.sMembers('rsvp:ids')
     
     // Получение всех ответов
     const responses: any[] = []
     for (const id of responseIds) {
-      const response = await kv.hgetall(`rsvp:${id}`)
+      const response = await redis.hGetAll(`rsvp:${id}`)
       if (response && response.name) {
         responses.push({
           id: response.id,
@@ -79,6 +101,9 @@ export async function GET(request: NextRequest) {
         })
       }
     }
+
+    // Закрытие соединения
+    await redis.disconnect()
 
     // Сортировка по дате создания (новые первыми)
     responses.sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime())
