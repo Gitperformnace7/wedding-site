@@ -7,10 +7,7 @@ const getRedisClient = async () => {
     url: process.env.REDIS_URL
   })
   
-  if (!client.isOpen) {
-    await client.connect()
-  }
-  
+  await client.connect()
   return client
 }
 
@@ -45,14 +42,22 @@ export async function POST(request: NextRequest) {
     // Подключение к Redis
     const redis = await getRedisClient()
     
-    // Сохранение в Redis
-    await redis.hSet(`rsvp:${response.id}`, response)
-    
-    // Добавление ID в список для получения всех ответов
-    await redis.sAdd('rsvp:ids', response.id)
-    
-    // Закрытие соединения
-    await redis.disconnect()
+    try {
+      // Сохранение в Redis (каждое поле отдельно)
+      await redis.hSet(`rsvp:${response.id}`, {
+        'id': response.id,
+        'name': response.name,
+        'attendance': response.attendance,
+        'message': response.message || '',
+        'created_at': response.created_at
+      })
+      
+      // Добавление ID в список для получения всех ответов
+      await redis.sAdd('rsvp:ids', response.id)
+    } finally {
+      // Закрытие соединения
+      await redis.quit()
+    }
 
     return NextResponse.json({
       success: true,
@@ -84,38 +89,40 @@ export async function GET(request: NextRequest) {
     // Подключение к Redis
     const redis = await getRedisClient()
 
-    // Получение всех ID ответов
-    const responseIds = await redis.sMembers('rsvp:ids')
-    
-    // Получение всех ответов
-    const responses: any[] = []
-    for (const id of responseIds) {
-      const response = await redis.hGetAll(`rsvp:${id}`)
-      if (response && response.name) {
-        responses.push({
-          id: response.id,
-          name: response.name,
-          attendance: response.attendance,
-          message: response.message,
-          created_at: response.created_at
-        })
+    try {
+      // Получение всех ID ответов
+      const responseIds = await redis.sMembers('rsvp:ids')
+      
+      // Получение всех ответов
+      const responses: any[] = []
+      for (const id of responseIds) {
+        const response = await redis.hGetAll(`rsvp:${id}`)
+        if (response && response.name) {
+          responses.push({
+            id: response.id,
+            name: response.name,
+            attendance: response.attendance,
+            message: response.message,
+            created_at: response.created_at
+          })
+        }
       }
+
+      // Сортировка по дате создания (новые первыми)
+      responses.sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime())
+
+      return NextResponse.json({
+        responses,
+        summary: {
+          total: responses.length,
+          attending: responses.filter(r => r.attendance === 'yes').length,
+          notAttending: responses.filter(r => r.attendance === 'no').length
+        }
+      })
+    } finally {
+      // Закрытие соединения
+      await redis.quit()
     }
-
-    // Закрытие соединения
-    await redis.disconnect()
-
-    // Сортировка по дате создания (новые первыми)
-    responses.sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime())
-
-    return NextResponse.json({
-      responses,
-      summary: {
-        total: responses.length,
-        attending: responses.filter(r => r.attendance === 'yes').length,
-        notAttending: responses.filter(r => r.attendance === 'no').length
-      }
-    })
   } catch (error) {
     console.error('Error fetching RSVP responses:', error)
     return NextResponse.json(
