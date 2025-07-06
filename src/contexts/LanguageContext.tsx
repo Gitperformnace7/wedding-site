@@ -79,7 +79,7 @@ const translations: Record<Language, TranslationRecord> = {
     'map.title': 'Қалай жету',
     'map.subtitle': 'Біз сіздер үшін салтанатымыз үшін тамаша жер таңдадық',
     'map.venue-name': 'Portofino мейрамханасы',
-    'map.address': 'Нұр-Сұлтан қ., Portofino мейрамханасы',
+    'map.address': 'Астана қ., Portofino мейрамханасы',
     'map.address-note': 'Нақты мекенжайды төмендегі батырма арқылы 2ГИС-те көруге болады',
     'map.directions': '2ГИС-те ашу',
     

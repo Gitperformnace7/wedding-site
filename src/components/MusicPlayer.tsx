@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Volume2, VolumeX, Music, Heart } from 'lucide-react'
+import { Volume2, VolumeX, Music } from 'lucide-react'
 
 export default function MusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false)
@@ -38,7 +38,6 @@ export default function MusicPlayer() {
 
   const handleCanPlay = () => {
     setIsLoaded(true)
-    console.log('Аудио загружено')
   }
 
   const handleEnded = () => {
@@ -55,13 +54,11 @@ export default function MusicPlayer() {
   useEffect(() => {
     const handleFirstInteraction = async () => {
       if (!hasInteracted && audioRef.current && isLoaded) {
-        console.log('Первое взаимодействие - пытаемся включить музыку')
         try {
           await audioRef.current.play()
           setIsPlaying(true)
           setHasInteracted(true)
           setShowHint(false)
-          console.log('Автоплей успешен')
         } catch (error) {
           console.error('Автоплей заблокирован:', error)
           setShowHint(true) // Показываем подсказку если автоплей не сработал

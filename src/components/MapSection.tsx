@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, Navigation, Phone, Heart } from 'lucide-react'
+import { MapPin, Navigation, Heart } from 'lucide-react'
 import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function MapSection() {

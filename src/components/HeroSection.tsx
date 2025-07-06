@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Heart, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 export default function HeroSection() {
   const scrollToDetails = () => {
@@ -14,9 +14,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full overflow-hidden mobile-full-height">
-      {/* Background Image */}
       <div className="absolute inset-0">
-        {/* Ваше свадебное фото */}
         <img 
           src="/images/wedding-photo.jpg" 
           alt="Рустем и Фариза" 
@@ -24,8 +22,6 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/50"></div>
       </div>
-
-      {/* Content Overlay */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -33,19 +29,17 @@ export default function HeroSection() {
           transition={{ duration: 1, delay: 0.5 }}
           className="text-center text-white h-full flex flex-col justify-between py-16"
         >
-          {/* Дата вверху - ЗДЕСЬ МОЖНО НАСТРОИТЬ ОТСТУП СВЕРХУ */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.8 }}
-            className="pt-2 md:pt-10" // Увеличил отступ сверху
+            className="pt-2 md:pt-10"
           >
             <h1 className="font-serif text-2xl md:text-4xl font-light tracking-wider text-shadow drop-shadow-lg text-white elegant-date">
               12 | 09 | 2025
             </h1>
           </motion.div>
 
-          {/* Wedding Day - ЗДЕСЬ НАСТРОЙКА ЦЕНТРАЛЬНОГО БЛОКА */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -58,12 +52,11 @@ export default function HeroSection() {
             
           </motion.div>
 
-          {/* Имена внизу - Каллиграфический стиль */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 1.4 }}
-            className="pb-16 md:pb-16" // Отступ снизу
+            className="pb-16 md:pb-16"
           >
             <div className="text-center">
               <h3 className="font-script text-6xl md:text-7xl text-white text-shadow drop-shadow-xl mb-3 font-normal leading-none elegant-script">
@@ -81,7 +74,6 @@ export default function HeroSection() {
           </motion.div>
         </motion.div>
 
-        {/* Scroll Down Indicator */}
         <motion.button
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
