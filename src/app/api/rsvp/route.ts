@@ -1,26 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import sqlite3 from 'sqlite3'
-import { open } from 'sqlite'
-
-// Инициализация базы данных
-async function initDB() {
-  const db = await open({
-    filename: './wedding_rsvp.db',
-    driver: sqlite3.Database
-  })
-
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS rsvp_responses (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      attendance TEXT NOT NULL,
-      message TEXT,
-      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-    )
-  `)
-
-  return db
-}
+import { kv } from '@vercel/kv'
 
 export async function POST(request: NextRequest) {
   try {
@@ -41,18 +20,24 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Сохранение в базе данных
-    const db = await initDB()
-    const result = await db.run(
-      'INSERT INTO rsvp_responses (name, attendance, message) VALUES (?, ?, ?)',
-      [name, attendance, message || null]
-    )
+    // Создание записи
+    const response = {
+      id: Date.now().toString(),
+      name,
+      attendance,
+      message: message || null,
+      created_at: new Date().toISOString()
+    }
 
-    await db.close()
+    // Сохранение в Vercel KV
+    await kv.hset(`rsvp:${response.id}`, response)
+    
+    // Добавление ID в список для получения всех ответов
+    await kv.sadd('rsvp:ids', response.id)
 
     return NextResponse.json({
       success: true,
-      id: result.lastID,
+      id: response.id,
       message: 'RSVP ответ сохранен успешно'
     })
   } catch (error) {
@@ -77,13 +62,26 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const db = await initDB()
-    const responses = await db.all(`
-      SELECT * FROM rsvp_responses 
-      ORDER BY created_at DESC
-    `)
+    // Получение всех ID ответов
+    const responseIds = await kv.smembers('rsvp:ids')
+    
+    // Получение всех ответов
+    const responses: any[] = []
+    for (const id of responseIds) {
+      const response = await kv.hgetall(`rsvp:${id}`)
+      if (response && response.name) {
+        responses.push({
+          id: response.id,
+          name: response.name,
+          attendance: response.attendance,
+          message: response.message,
+          created_at: response.created_at
+        })
+      }
+    }
 
-    await db.close()
+    // Сортировка по дате создания (новые первыми)
+    responses.sort((a, b) => new Date(b.created_at as string).getTime() - new Date(a.created_at as string).getTime())
 
     return NextResponse.json({
       responses,
