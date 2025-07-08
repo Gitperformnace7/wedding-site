@@ -9,9 +9,9 @@ export default function MapSection() {
   const { t } = useLanguage()
   
   const handleDirections = () => {
-    // Ссылка на 2ГИС для ресторана Portofino
+    // Ссылка на 2ГИС для ресторана Portofino Grand Ballroom
     // Заменить на реальный адрес когда будет известен
-    const address = 'Ресторан Portofino'
+    const address = 'Ресторан Portofino Grand Ballroom'
     const url = 'https://2gis.kz/astana/geo/70000001022291208'
     window.open(url, '_blank')
   }

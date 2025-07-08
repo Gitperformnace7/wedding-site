@@ -49,7 +49,7 @@ const translations: Record<Language, TranslationRecord> = {
     'details.hours': 'сағат',
     'details.minutes': 'минут',
     'details.seconds': 'секунд',
-    'details.venue': 'Portofino мейрамханасы',
+    'details.venue': 'Portofino Grand Ballroom мейрамханасы',
     
     // RSVPSection
     'rsvp.title': 'Қатысуды растау',
@@ -72,14 +72,14 @@ const translations: Record<Language, TranslationRecord> = {
     'rsvp.add-to-calendar': 'Күнтізбеге қосу',
     'rsvp.calendar-subtitle': 'Біздің той күнін сақтауды ұмытпаңыз!',
     'rsvp.calendar-button': 'Күнтізбеге қосу',
-    'rsvp.calendar-info': '12 қыркүйек 2025, 18:00 • Portofino мейрамханасы',
+    'rsvp.calendar-info': '12 қыркүйек 2025, 18:00 • Portofino Grand Ballroom мейрамханасы',
     'rsvp.error': 'Жауапты жіберуде қате орын алды. Өтінеміз, қайтадан көріңіз.',
     
     // MapSection
     'map.title': 'Қалай жету',
-    'map.subtitle': 'Біз сіздер үшін салтанатымыз үшін тамаша жер таңдадық',
-    'map.venue-name': 'Portofino мейрамханасы',
-    'map.address': 'Астана қ., Portofino мейрамханасы',
+          'map.subtitle': 'Біз сіздерге арнап, салтанатымыз үшін тамаша жер таңдадық',
+    'map.venue-name': 'Portofino Grand Ballroom мейрамханасы',
+    'map.address': 'Астана қ., Portofino Grand Ballroom мейрамханасы',
     'map.address-note': 'Нақты мекенжайды төмендегі батырма арқылы 2ГИС-те көруге болады',
     'map.directions': '2ГИС-те ашу',
     
@@ -121,7 +121,7 @@ const translations: Record<Language, TranslationRecord> = {
     'details.hours': 'часов',
     'details.minutes': 'минут',
     'details.seconds': 'секунд',
-    'details.venue': 'Ресторан Portofino',
+    'details.venue': 'Ресторан Portofino Grand Ballroom',
     
     // RSVPSection
     'rsvp.title': 'Подтверждение присутствия',
@@ -144,14 +144,14 @@ const translations: Record<Language, TranslationRecord> = {
     'rsvp.add-to-calendar': 'Добавить в календарь',
     'rsvp.calendar-subtitle': 'Не забудьте сохранить дату нашей свадьбы!',
     'rsvp.calendar-button': 'Добавить в календарь',
-    'rsvp.calendar-info': '12 сентября 2025, 18:00 • Ресторан Portofino',
+    'rsvp.calendar-info': '12 сентября 2025, 18:00 • Ресторан Portofino Grand Ballroom',
     'rsvp.error': 'Произошла ошибка при отправке ответа. Пожалуйста, попробуйте еще раз.',
     
     // MapSection
     'map.title': 'Как добраться',
     'map.subtitle': 'Мы выбрали для вас прекрасное место для нашего торжества',
-    'map.venue-name': 'Ресторан Portofino',
-    'map.address': 'г. Астана, Ресторан Portofino',
+    'map.venue-name': 'Ресторан Portofino Grand Ballroom',
+    'map.address': 'г. Астана, Ресторан Portofino Grand Ballroom',
     'map.address-note': 'Точный адрес можно посмотреть в 2ГИС по кнопке ниже',
     'map.directions': 'Открыть в 2ГИС',
     
