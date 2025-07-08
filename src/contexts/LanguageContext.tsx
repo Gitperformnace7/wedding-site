@@ -79,7 +79,7 @@ const translations: Record<Language, TranslationRecord> = {
     'map.title': 'Қалай жету',
     'map.subtitle': 'Біз сіздерге арнап, салтанатымыз үшін тамаша жер таңдадық',
     'map.venue-name': 'Portofino Grand Ballroom мейрамханасы',
-    'map.address': 'Астана қ., Portofino мейрамханасы',
+    'map.address': 'Астана қ., Portofino Grand Ballroom мейрамханасы',
     'map.address-note': 'Нақты мекенжайды төмендегі батырма арқылы 2ГИС-те көруге болады',
     'map.directions': '2ГИС-те ашу',
     
@@ -150,7 +150,7 @@ const translations: Record<Language, TranslationRecord> = {
     // MapSection
     'map.title': 'Как добраться',
     'map.subtitle': 'Мы выбрали для вас прекрасное место для нашего торжества',
-    'map.venue-name': 'Ресторан Portofino',
+    'map.venue-name': 'Ресторан Portofino Grand Ballroom',
     'map.address': 'г. Астана, Ресторан Portofino Grand Ballroom',
     'map.address-note': 'Точный адрес можно посмотреть в 2ГИС по кнопке ниже',
     'map.directions': 'Открыть в 2ГИС',
